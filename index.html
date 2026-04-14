@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ш. Құсайынов «Томирис» - Интерактивті Сабақ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto+Slab:wght@400;700&display=swap');
+        
+       body {
+    font-family: 'Roboto Slab', serif;
+    color: #e5e7eb;
+
+    /* СЕНІҢ СУРЕТ ФОН */
+    background-image: url('tomiris.jpg'); /* МЫНДА СУРЕТ АТЫ */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    /* Қаралау (текст көріну үшін) */
+    background-color: rgba(0,0,0,0.6);
+    background-blend-mode: darken;
+}
+        
+        .gold-border { border: 1px solid #d4af37; }
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af37 0%, #f2d06b 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-dark {
+            background: rgba(24, 24, 27, 0.95);
+            border: 1px solid #3f3f46;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #d4af37;
+            border-bottom-color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .drop-zone {
+            min-height: 70px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px dashed #52525b;
+        }
+
+        .drop-zone.active {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .btn-gold {
+            background: linear-gradient(to right, #b45309, #d97706);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Тақырып -->
+        <header class="text-center mb-10 animate__animated animate__fadeIn">
+            <h1 class="text-5xl md:text-7xl font-bold gold-gradient uppercase mb-2" style="font-family: 'Oswald', sans-serif;">ТОМИРИС</h1>
+            <p class="text-sm text-amber-200/50 tracking-[0.2em] uppercase italic">Интерактивті оқу модулі</p>
+        </header>
+
+        <!-- Навигациялық қойындылар (ТҮГЕЛ ҮСТІНДЕ) -->
+        <nav class="flex flex-wrap justify-center gap-2 mb-8 border-b border-zinc-800 animate__animated animate__fadeInDown">
+            <button onclick="openTab(event, 'composition')" class="tab-btn active px-6 py-3 font-bold uppercase text-xs tracking-widest">01. Құрылым</button>
+            <button onclick="openTab(event, 'quotes')" class="tab-btn px-6 py-3 font-bold uppercase text-xs tracking-widest">02. Цитаталар</button>
+            <button onclick="openTab(event, 'analysis')" class="tab-btn px-6 py-3 font-bold uppercase text-xs tracking-widest">03. Талдау</button>
+            <button onclick="openTab(event, 'characters')" class="tab-btn px-6 py-3 font-bold uppercase text-xs tracking-widest">04. Кейіпкерлер</button>
+            <button onclick="openTab(event, 'essay')" class="tab-btn px-6 py-3 font-bold uppercase text-xs tracking-widest">05. Толғау</button>
+        </nav>
+
+        <div class="grid grid-cols-1 gap-8">
+            
+            <!-- 1. КОМПОЗИЦИЯ -->
+            <section id="composition" class="content-section active animate__animated animate__fadeIn">
+                <div class="card-dark p-8 rounded-3xl gold-border">
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6 flex items-center gap-3">
+                        <span class="text-zinc-600">01</span> Оқиғалар тізбегі
+                    </h3>
+                    <p class="text-gray-400 mb-6 italic">Пьеса оқиғаларын ретімен орналастыру үшін элементтерді сүйреңіз.</p>
+                    
+                    <div id="events-pool" class="flex flex-wrap gap-3 mb-8 p-4 bg-black/30 rounded-xl">
+                        <div draggable="true" ondragstart="drag(event)" id="ev1" class="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg cursor-grab active:cursor-grabbing hover:border-amber-500 transition">Кирдің өлімі</div>
+                        <div draggable="true" ondragstart="drag(event)" id="ev2" class="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg cursor-grab active:cursor-grabbing hover:border-amber-500 transition">Елес пен Шұғыла диалогі</div>
+                        <div draggable="true" ondragstart="drag(event)" id="ev3" class="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg cursor-grab active:cursor-grabbing hover:border-amber-500 transition">Спаргапистің тақ сұрауы</div>
+                        <div draggable="true" ondragstart="drag(event)" id="ev4" class="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg cursor-grab active:cursor-grabbing hover:border-amber-500 transition">Балхаштың оралуы</div>
+                        <div draggable="true" ondragstart="drag(event)" id="ev5" class="bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg cursor-grab active:cursor-grabbing hover:border-amber-500 transition">Спаргапистің қазасы</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="space-y-2">
+                            <span class="text-[10px] uppercase text-zinc-500">Басталуы</span>
+                            <div id="slot-1" ondrop="drop(event)" ondragover="allowDrop(event)" class="drop-zone rounded-xl flex items-center justify-center p-2 text-[10px] text-zinc-600 text-center">...</div>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[10px] uppercase text-zinc-500">Шиеленіс</span>
+                            <div id="slot-2" ondrop="drop(event)" ondragover="allowDrop(event)" class="drop-zone rounded-xl flex items-center justify-center p-2 text-[10px] text-zinc-600 text-center">...</div>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[10px] uppercase text-zinc-500">Дамуы</span>
+                            <div id="slot-3" ondrop="drop(event)" ondragover="allowDrop(event)" class="drop-zone rounded-xl flex items-center justify-center p-2 text-[10px] text-zinc-600 text-center">...</div>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[10px] uppercase text-zinc-500">Шарықтау</span>
+                            <div id="slot-4" ondrop="drop(event)" ondragover="allowDrop(event)" class="drop-zone rounded-xl flex items-center justify-center p-2 text-[10px] text-zinc-600 text-center">...</div>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-[10px] uppercase text-zinc-500">Шешімі</span>
+                            <div id="slot-5" ondrop="drop(event)" ondragover="allowDrop(event)" class="drop-zone rounded-xl flex items-center justify-center p-2 text-[10px] text-zinc-600 text-center">...</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. ЦИТАТАЛАР -->
+            <section id="quotes" class="content-section animate__animated animate__fadeIn">
+                <div class="card-dark p-8 rounded-3xl">
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Сөз иесін тап</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 bg-black/40 border border-zinc-800 rounded-2xl h-full flex flex-col justify-between">
+                            <p class="italic text-lg text-zinc-300 mb-6">«Іздеп келгенің қан болса, қанып іш!»</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="checkQuote(this, 'Томирис')" class="flex-1 py-2 rounded-lg border border-zinc-700 hover:border-amber-500 transition text-sm">Томирис</button>
+                                <button onclick="checkQuote(this, 'Томирис')" class="flex-1 py-2 rounded-lg border border-zinc-700 hover:border-amber-500 transition text-sm">Кир</button>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-black/40 border border-zinc-800 rounded-2xl h-full flex flex-col justify-between">
+                            <p class="italic text-lg text-zinc-300 mb-6">«Тәңір атқан адамды мен аямаймын!»</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="checkQuote(this, 'Томирис')" class="flex-1 py-2 rounded-lg border border-zinc-700 hover:border-amber-500 transition text-sm">Елес</button>
+                                <button onclick="checkQuote(this, 'Томирис')" class="flex-1 py-2 rounded-lg border border-zinc-700 hover:border-amber-500 transition text-sm">Томирис</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. ТАЛДАУ -->
+            <section id="analysis" class="content-section animate__animated animate__fadeIn">
+                <div class="card-dark p-8 rounded-3xl">
+                    <h3 class="text-2xl font-bold text-amber-500 mb-6">Конфликт табиғаты</h3>
+                    <div class="space-y-8">
+                        <div>
+                            <p class="text-amber-200 mb-4">Пьесадағы басты трагедиялық тартыс:</p>
+                            <div class="grid grid-cols-1 gap-3">
+                                <button onclick="selectOption(this, 'correct')" class="text-left p-4 rounded-xl border border-zinc-700 hover:bg-amber-900/10 transition">Жеке бастың бостандығы мен ел алдындағы жауапкершілік арасындағы қайшылық.</button>
+                                <button onclick="selectOption(this, 'wrong')" class="text-left p-4 rounded-xl border border-zinc-700 hover:bg-amber-900/10 transition">Кир мен Томиристің махаббат хикаясының сәтсіз аяқталуы.</button>
+                                <button onclick="selectOption(this, 'wrong')" class="text-left p-4 rounded-xl border border-zinc-700 hover:bg-amber-900/10 transition">Сақтар мен парсылардың діни көзқарастарының үйлеспеуі.</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. КЕЙІПКЕРЛЕР (ТАПСЫРМА РЕТІНДЕ ЖАҢАРТЫЛДЫ) -->
+            <section id="characters" class="content-section animate__animated animate__fadeIn">
+                <h3 class="text-2xl font-bold text-amber-500 mb-6">Сипаттамаға сәйкес кейіпкерді таңдаңыз</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="card-dark p-6 rounded-2xl border-b-4 border-zinc-700 flex flex-col justify-between">
+                        <p class="text-sm text-zinc-400 leading-relaxed mb-6">Сақ патшасы. Елдік мүддені жеке өмірінен жоғары қойған парасатты ана, қайсар жауынгер.</p>
+                        <select onchange="verifyChar(this, 'Томирис')" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded-lg text-sm text-amber-400 outline-none">
+                            <option value="">Кім?</option>
+                            <option value="Томирис">Томирис</option>
+                            <option value="Спаргапис">Спаргапис</option>
+                            <option value="Кир">Кир</option>
+                            <option value="Елес">Елес</option>
+                        </select>
+                    </div>
+                    <div class="card-dark p-6 rounded-2xl border-b-4 border-zinc-700 flex flex-col justify-between">
+                        <p class="text-sm text-zinc-400 leading-relaxed mb-6">Томиристің ұлы. Намысты, бірақ албырт. Жастық қателігі үшін өлімді таңдаған трагедиялық бейне.</p>
+                        <select onchange="verifyChar(this, 'Спаргапис')" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded-lg text-sm text-amber-400 outline-none">
+                            <option value="">Кім?</option>
+                            <option value="Томирис">Томирис</option>
+                            <option value="Спаргапис">Спаргапис</option>
+                            <option value="Кир">Кир</option>
+                            <option value="Елес">Елес</option>
+                        </select>
+                    </div>
+                    <div class="card-dark p-6 rounded-2xl border-b-4 border-zinc-700 flex flex-col justify-between">
+                        <p class="text-sm text-zinc-400 leading-relaxed mb-6">Парсы патшасы. Шексіз билікке құмар. Томиристі бағындыру арқылы әлемді иемденгісі келеді.</p>
+                        <select onchange="verifyChar(this, 'Кир')" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded-lg text-sm text-amber-400 outline-none">
+                            <option value="">Кім?</option>
+                            <option value="Томирис">Томирис</option>
+                            <option value="Спаргапис">Спаргапис</option>
+                            <option value="Кир">Кир</option>
+                            <option value="Елес">Елес</option>
+                        </select>
+                    </div>
+                    <div class="card-dark p-6 rounded-2xl border-b-4 border-zinc-700 flex flex-col justify-between">
+                        <p class="text-sm text-zinc-400 leading-relaxed mb-6">Жәдігөй кемпір. Драмадағы мистикалық күш. Болашақты болжайтын, Тәңір үнін жеткізуші.</p>
+                        <select onchange="verifyChar(this, 'Елес')" class="w-full bg-zinc-900 border border-zinc-700 p-2 rounded-lg text-sm text-amber-400 outline-none">
+                            <option value="">Кім?</option>
+                            <option value="Томирис">Томирис</option>
+                            <option value="Спаргапис">Спаргапис</option>
+                            <option value="Кир">Кир</option>
+                            <option value="Елес">Елес</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. ТОЛҒАУ -->
+            <section id="essay" class="content-section animate__animated animate__fadeIn">
+                <div class="card-dark p-8 rounded-3xl border-t-8 border-amber-700">
+                    <h3 class="text-2xl font-bold text-amber-500 mb-4 italic">Шығармашылық рефлексия</h3>
+                    <p class="text-sm text-zinc-400 mb-6">«Томирис трагедиясы — рухтың жеңісі ме, әлде жеңілісі ме?» тақырыбында өз ойыңызды тұжырымдап жазыңыз.</p>
+                    <textarea id="essay-text" class="w-full bg-black/40 p-6 rounded-2xl border border-zinc-700 focus:border-amber-500 outline-none min-h-[200px] text-zinc-200" placeholder="Ойыңызды осында қалдырыңыз..."></textarea>
+                    <button onclick="finishTask()" class="mt-6 px-10 py-4 btn-gold rounded-xl font-bold uppercase tracking-widest text-sm hover:scale-105 transition">Жұмысты аяқтау</button>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="mt-16 text-center text-zinc-600 text-[10px] tracking-widest uppercase">
+            © 2024 Қазақ әдебиеті — Интерактивті оқу ортасы
+        </footer>
+    </div>
+
+    <script>
+        // Қойындыларды ауыстыру функциясы
+        function openTab(evt, tabName) {
+            const sections = document.getElementsByClassName("content-section");
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove("active");
+            }
+
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Драг-н-дроп
+        const correctMap = {
+            "slot-1": "ev2", "slot-2": "ev3", "slot-3": "ev4", "slot-4": "ev5", "slot-5": "ev1"
+        };
+
+        function allowDrop(ev) { ev.preventDefault(); ev.currentTarget.classList.add('active'); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+        function drop(ev) {
+            ev.preventDefault();
+            const slot = ev.currentTarget;
+            slot.classList.remove('active');
+            const data = ev.dataTransfer.getData("text");
+            const draggedNode = document.getElementById(data);
+            slot.innerHTML = "";
+            slot.appendChild(draggedNode);
+            checkSlots();
+        }
+
+        function checkSlots() {
+            let correct = 0;
+            for (let id in correctMap) {
+                const slot = document.getElementById(id);
+                if (slot.children.length > 0 && slot.children[0].id === correctMap[id]) {
+                    slot.style.borderColor = "#10b981";
+                    correct++;
+                } else if (slot.children.length > 0) {
+                    slot.style.borderColor = "#ef4444";
+                }
+            }
+            if(correct === 5) {
+                const message = document.createElement('div');
+                message.className = "fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg animate__animated animate__bounceIn";
+                message.innerText = "Құттықтаймыз! Композиция дұрыс жиналды.";
+                document.body.appendChild(message);
+                setTimeout(() => message.remove(), 3000);
+            }
+        }
+
+        // Цитата тексеру
+        function checkQuote(btn, correct) {
+            const btns = btn.parentElement.querySelectorAll('button');
+            btns.forEach(b => b.disabled = true);
+            if(btn.innerText === correct) {
+                btn.classList.add('bg-green-600/20', 'border-green-500', 'text-green-500');
+            } else {
+                btn.classList.add('bg-red-600/20', 'border-red-500', 'text-red-500');
+            }
+        }
+
+        // Тест таңдау
+        function selectOption(btn, type) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('button').forEach(b => {
+                b.disabled = true;
+                b.classList.add('opacity-50');
+            });
+            btn.classList.remove('opacity-50');
+            if(type === 'correct') {
+                btn.classList.add('border-green-500', 'text-green-400', 'bg-green-900/10');
+            } else {
+                btn.classList.add('border-red-500', 'text-red-400', 'bg-red-900/10');
+            }
+        }
+
+        // Кейіпкерді тексеру функциясы
+        function verifyChar(el, correct) {
+            const card = el.closest('.card-dark');
+            if(el.value === correct) {
+                card.style.borderColor = "#10b981";
+                el.classList.add('text-green-400');
+                el.classList.remove('text-red-400');
+            } else if (el.value !== "") {
+                card.style.borderColor = "#ef4444";
+                el.classList.add('text-red-400');
+                el.classList.remove('text-green-400');
+            } else {
+                card.style.borderColor = "#3f3f46";
+            }
+        }
+
+        // Жұмысты аяқтау функциясы
+        function finishTask() {
+            const essayText = document.getElementById('essay-text').value;
+            if(essayText.trim().length < 20) {
+                alert("Жұмысты аяқтау үшін толғауды толықтырыңыз (кемі 20 таңба).");
+                return;
+            }
+
+            const btn = document.querySelector('#essay button');
+            btn.innerHTML = "Жіберілді ✓";
+            btn.disabled = true;
+            btn.classList.replace('btn-gold', 'bg-zinc-700');
+            
+            const completionMsg = document.createElement('div');
+            completionMsg.className = "fixed inset-0 flex items-center justify-center bg-black/80 z-50 animate__animated animate__fadeIn";
+            completionMsg.innerHTML = `
+                <div class="card-dark p-10 rounded-3xl gold-border text-center max-w-sm">
+                    <h2 class="text-3xl font-bold gold-gradient mb-4">Жұмыс қабылданды!</h2>
+                    <p class="text-zinc-400 mb-6">Интерактивті сабақты сәтті аяқтадыңыз. Толғауыңыз бағалауға жіберілді.</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="px-8 py-2 border border-amber-500 text-amber-500 rounded-lg">Жабу</button>
+                </div>
+            `;
+            document.body.appendChild(completionMsg);
+        }
+    </script>
+</body>
+</html>
